@@ -9,169 +9,178 @@
 
 {% block content %}
 {% load static %}
-<section class="meer container-fluid px-0" style=" background-image: url(/static/img/h.jpeg)">
+<section class="meer container-fluid " style=" background-image: url(/static/img/h.jpeg)">
   <div class="d-flex flex-column align-items-center justify-content-center m-4" style="height: 100vh;">
-  {% if user.is_authenticated %}
- 
-<div class="main-block">
-      <form action="/query/" method="post">
-        {% csrf_token %}
-        <div class="title">
-          <i class="fas fa-pencil-alt"></i> 
-          <h2>Get your Vaccine</h2>
-        </div>
-        <div class="info">
-          <input class="fname" type="text" name="name" placeholder="Full name">
-          <input type="text" id='email' name="email" placeholder="Email">
-          <input type="date" id='date' name="date" placeholder="Date">
-          <input type="text" id='dis'name="dis" placeholder="District Name">
-          <select class="form-select" id='vac' name='vac' aria-label="Default select example" required>
-            <option value="course-type" selected>Vaccine Name*</option>
-            <option value="COVAXIN">Covaxin</option>
-            <option value="COVISHEILD">Covisheild</option>
+    {% if user.is_authenticated %}
     
-          </select>
-          <select class="form-select" id='age' name='age' aria-label="Default select example" required>
-            <option selected>Choose Age*</option>
-            <option value="18">18+</option>
-            <option value="45">45+</option>
-          </select>
+      <div class="main-block">
+        <form action="/query/" method="post">
+          {% csrf_token %}
+          <div class="title">
+            <i class="fas fa-pencil-alt"></i>
+            <h2>Get your Vaccine</h2>
+          </div>
+          <div class="info">
+            <input class="fname" type="text" name="name" placeholder="Full name">
+            <input type="text" id='email' name="email" placeholder="Email">
+            <input type="date" id='date' name="date" placeholder="Date">
+            <input type="text" id='dis' name="dis" placeholder="District Name">
+            <select class="form-select" id='vac' name='vac' aria-label="Default select example" required>
+              <option value="course-type" selected>Vaccine Name*</option>
+              <option value="COVAXIN">Covaxin</option>
+              <option value="COVISHEILD">Covisheild</option>
+
+            </select>
+            <select class="form-select" id='age' name='age' aria-label="Default select example" required>
+              <option selected>Choose Age*</option>
+              <option value="18">18+</option>
+              <option value="45">45+</option>
+            </select>
+          </div>
+
+          <button type="submit" class='btn btn-sm btn-outline-dark'>Submit</button>
+        </form>
+      </div>
+    </div>
+    {%else%}
+<div class="container">
+  <br>
+  <br>
+  <br>
+  <br>
+    <div class="d-flex flex-column align-items-center justify-content-center m-4" style="height: 100vh;">
+      <div class="forms">
+        <div class="form-wrapper is-active">
+          <button type="button" class="switcher switcher-login">
+            Login
+            <span class="underline"></span>
+          </button>
+          <form class="form form-login" method="post" action="/login/">
+            {% csrf_token %}
+            <fieldset>
+              <legend>Please, enter your email and password for login.</legend>
+              <div class="input-block">
+                <label for="username">Username</label>
+                <input id="username" type="text" name='username' required>
+              </div>
+              <div class="input-block">
+                <label for="login-password">Password</label>
+                <input id="pass" type="password" name='pass' required>
+              </div>
+            </fieldset>
+            <button type="submit" class="btn-login">Login</button>
+          </form>
         </div>
-
-        <button type="submit" class='btn btn-sm btn-outline-dark' >Submit</button>
-      </form>
-    </div>
-  </div>
-{%else%}
-<div class='container m-5'>
-  <h1>hello world</h1>
-</div>
-<div class="d-flex flex-column align-items-center justify-content-center m-4" style="height: 100vh;">
-            <div class="forms">
-              <div class="form-wrapper is-active">
-                <button type="button" class="switcher switcher-login">
-                  Login
-                  <span class="underline"></span>
-                </button>
-                <form class="form form-login" method="post" action="/login/">
-                  {% csrf_token %}
-                  <fieldset>
-                    <legend>Please, enter your email and password for login.</legend>
-                    <div class="input-block">
-                      <label for="username">Username</label>
-                      <input id="username" type="text" name='username' required>
-                    </div>
-                    <div class="input-block">
-                      <label for="login-password">Password</label>
-                      <input id="pass" type="password" name='pass'required>
-                    </div>
-                  </fieldset>
-                  <button type="submit" class="btn-login">Login</button>
-                </form>
+        <div class="form-wrapper">
+          <button type="button" class="switcher switcher-signup">
+            Sign Up
+            <span class="underline"></span>
+          </button>
+          <form class="form form-signup" method="post" action="/signup/">
+            {% csrf_token %}
+            <fieldset>
+              <div class="input-block">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username"
+                  placeholder="Choose a unique username" required>
               </div>
-              <div class="form-wrapper">
-                <button type="button" class="switcher switcher-signup">
-                  Sign Up
-                  <span class="underline"></span>
-                </button>
-                <form class="form form-signup" method="post" action="/signup/">
-                  {% csrf_token %}
-                  <fieldset>
-                    <legend>Please, enter your email, password and password confirmation for sign up.</legend>
-                    <div class="input-block">
-                      <label for="username">Username</label>
-                      <input id="username" type="text" required>
-                    </div>
-                    <div class="input-block">
-                      <label for="email">E-mail</label>
-                      <input id="email" type="email" required>
-                    </div>
-                    <div class="input-block">
-                      <label for="pass1">Password</label>
-                      <input id="pass1" type="password" required>
-                    </div>
-                    <div class="input-block">
-                      <label for="pass2">Confirm password</label>
-                      <input id="pass2" type="password" required>
-                    </div>
-                    
-                  </fieldset>
-                  <button type="submit" class="btn-signup">Continue</button>
-                </form>
+              <div class="input-block">
+                <label for="pass1">Password</label>
+                <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter Your First Name"
+                  required>
               </div>
-            </div>
-          </section>
+              <div class="input-block">
+                <label for="pass2">Confirm Password</label>
+                <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Enter Your Last Name"
+                  required>
+              </div>
+              <div class="input-block">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                  required>
+              </div>
+
+            </fieldset>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-dark">Submit</button>
+          </form>
+
+        </div>
+      </div>
     </div>
-  </section>
-  {%endif%}
-  <script>
-      const switchers = [...document.querySelectorAll('.switcher')]
-
-switchers.forEach(item => {
-	item.addEventListener('click', function() {
-		switchers.forEach(item => item.parentElement.classList.remove('is-active'))
-		this.parentElement.classList.add('is-active')
-	})
-})
-
-  </script>
-  <script>
-   var currentTab = 0;
-document.addEventListener("DOMContentLoaded", function(event) {
+</section>
 
 
-showTab(currentTab);
-
-});
-
-function showTab(n) {
-var x = document.getElementsByClassName("tab");
-x[n].style.display = "block";
-if (n == 0) {
-document.getElementById("prevBtn").style.display = "none";
-} else {
-document.getElementById("prevBtn").style.display = "inline";
-}
-if (n == (x.length - 1)) {
-document.getElementById("nextBtn").innerHTML = "Submit";
-} else {
-document.getElementById("nextBtn").innerHTML = "Next";
-}
-fixStepIndicator(n)
-}
-
-function nextPrev(n) {
-var x = document.getElementsByClassName("tab");
-if (n == 1 && !validateForm()) return false;
-x[currentTab].style.display = "none";
-currentTab = currentTab + n;
-if (currentTab >= x.length) {
-// document.getElementById("regForm").submit();
-// return false;
-//alert("sdf");
-document.getElementById("nextprevious").style.display = "none";
-document.getElementById("all-steps").style.display = "none";
-document.getElementById("register").style.display = "none";
-document.getElementById("text-message").style.display = "block";
-
-
-
-
-}
-showTab(currentTab);
-}
-
-function validateForm() {
-var x, y, i, valid = true;
-x = document.getElementsByClassName("tab");
-y = x[currentTab].getElementsByTagName("input");
-for (i = 0; i < y.length; i++) { if (y[i].value=="" ) { y[i].className +=" invalid" ; valid=false; } } if (valid) { document.getElementsByClassName("step")[currentTab].className +=" finish" ; } return valid; } function fixStepIndicator(n) { var i, x=document.getElementsByClassName("step"); for (i=0; i < x.length; i++) { x[i].className=x[i].className.replace(" active", "" ); } x[n].className +=" active" ; }</script>
+{%endif%}
 <script>
-  $( function() {
+  const switchers = [...document.querySelectorAll('.switcher')]
+
+  switchers.forEach(item => {
+    item.addEventListener('click', function () {
+      switchers.forEach(item => item.parentElement.classList.remove('is-active'))
+      this.parentElement.classList.add('is-active')
+    })
+  })
+
+</script>
+<script>
+  var currentTab = 0;
+  document.addEventListener("DOMContentLoaded", function (event) {
+
+
+    showTab(currentTab);
+
+  });
+
+  function showTab(n) {
+    var x = document.getElementsByClassName("tab");
+    x[n].style.display = "block";
+    if (n == 0) {
+      document.getElementById("prevBtn").style.display = "none";
+    } else {
+      document.getElementById("prevBtn").style.display = "inline";
+    }
+    if (n == (x.length - 1)) {
+      document.getElementById("nextBtn").innerHTML = "Submit";
+    } else {
+      document.getElementById("nextBtn").innerHTML = "Next";
+    }
+    fixStepIndicator(n)
+  }
+
+  function nextPrev(n) {
+    var x = document.getElementsByClassName("tab");
+    if (n == 1 && !validateForm()) return false;
+    x[currentTab].style.display = "none";
+    currentTab = currentTab + n;
+    if (currentTab >= x.length) {
+      // document.getElementById("regForm").submit();
+      // return false;
+      //alert("sdf");
+      document.getElementById("nextprevious").style.display = "none";
+      document.getElementById("all-steps").style.display = "none";
+      document.getElementById("register").style.display = "none";
+      document.getElementById("text-message").style.display = "block";
+
+
+
+
+    }
+    showTab(currentTab);
+  }
+
+  function validateForm() {
+    var x, y, i, valid = true;
+    x = document.getElementsByClassName("tab");
+    y = x[currentTab].getElementsByTagName("input");
+    for (i = 0; i < y.length; i++) { if (y[i].value == "") { y[i].className += " invalid"; valid = false; } } if (valid) { document.getElementsByClassName("step")[currentTab].className += " finish"; } return valid;
+  } function fixStepIndicator(n) { var i, x = document.getElementsByClassName("step"); for (i = 0; i < x.length; i++) { x[i].className = x[i].className.replace(" active", ""); } x[n].className += " active"; }</script>
+<script>
+  $(function () {
     var availableTags = ['Lepa Rada', 'Lohit', 'Longding', 'Lower Dibang Valley', 'Lower Siang', 'Lower Subansiri', 'Namsai', 'Pakke Kessang', 'Papum Pare', 'Shi Yomi', 'Siang', 'Tawang', 'Tirap', 'Upper Siang', 'Upper Subansiri', 'West Kameng', 'West Siang', 'Ahmedabad', 'Ahmedabad Corporation', 'Amreli', 'Anand', 'Aravalli', 'Banaskantha', 'Bharuch', 'Bhavnagar', 'Bhavnagar Corporation', 'Botad', 'Chhotaudepur', 'Dahod', 'Dang', 'Devbhumi Dwaraka', 'Gandhinagar', 'Gandhinagar Corporation', 'Gir Somnath', 'Jamnagar', 'Jamnagar Corporation', 'Junagadh', 'Junagadh Corporation', 'Kheda', 'Kutch', 'Mahisagar', 'Mehsana', 'Morbi', 'Narmada', 'Navsari', 'Panchmahal', 'Patan', 'Porbandar', 'Rajkot', 'Rajkot Corporation', 'Sabarkantha', 'Surat', 'Surat Corporation', 'Surendranagar', 'Tapi', 'Vadodara', 'Vadodara Corporation', 'Valsad', 'East Sikkim', 'North Sikkim', 'South Sikkim', 'West Sikkim', 'Aizawl East', 'Aizawl West', 'Champhai', 'Kolasib', 'Lawngtlai', 'Lunglei', 'Mamit', 'Serchhip', 'Siaha', 'Bishnupur', 'Chandel', 'Churachandpur', 'Imphal East', 'Imphal West', 'Jiribam', 'Kakching', 'Kamjong', 'Kangpokpi', 'Noney', 'Pherzawl', 'Senapati', 'Tamenglong', 'Tengnoupal', 'Thoubal', 'Ukhrul', 'Chandigarh', 'Almora', 'Bageshwar', 'Chamoli', 'Champawat', 'Dehradun', 'Haridwar', 'Nainital', 'Pauri Garhwal', 'Pithoragarh', 'Rudraprayag', 'Tehri Garhwal', 'Udham Singh Nagar', 'Uttarkashi', 'Bokaro', 'Chatra', 'Deoghar', 'Dhanbad', 'Dumka', 'East Singhbhum', 'Garhwa', 'Giridih', 'Godda', 'Gumla', 'Hazaribagh', 'Jamtara', 'Khunti', 'Koderma', 'Latehar', 'Lohardaga', 'Pakur', 'Palamu', 'Ramgarh', 'Ranchi', 'Sahebganj', 'Seraikela Kharsawan', 'Simdega', 'West Singhbhum', 'Araria', 'Arwal', 'Aurangabad', 'Banka', 'Begusarai', 'Bhagalpur', 'Bhojpur', 'Buxar', 'Darbhanga', 'East Champaran', 'Gaya', 'Gopalganj', 'Jamui', 'Jehanabad', 'Kaimur', 'Katihar', 'Khagaria', 'Kishanganj', 'Lakhisarai', 'Madhepura', 'Madhubani', 'Munger', 'Muzaffarpur', 'Nalanda', 'Nawada', 'Patna', 'Purnia', 'Rohtas', 'Saharsa', 'Samastipur', 'Saran', 'Sheikhpura', 'Sheohar', 'Sitamarhi', 'Siwan', 'Supaul', 'Vaishali', 'West Champaran', 'Agra', 'Aligarh', 'Ambedkar Nagar', 'Amethi', 'Amroha', 'Auraiya', 'Ayodhya', 'Azamgarh', 'Badaun', 'Baghpat', 'Bahraich', 'Balarampur', 'Ballia', 'Banda', 'Barabanki', 'Bareilly', 'Basti', 'Bhadohi', 'Bijnour', 'Bulandshahr', 'Chandauli', 'Chitrakoot', 'Deoria', 'Etah', 'Etawah', 'Farrukhabad', 'Fatehpur', 'Firozabad', 'Gautam Buddha Nagar', 'Ghaziabad', 'Ghazipur', 'Gonda', 'Gorakhpur', 'Hamirpur', 'Hapur', 'Hardoi', 'Hathras', 'Jalaun', 'Jaunpur', 'Jhansi', 'Kannauj', 'Kanpur Dehat', 'Kanpur Nagar', 'Kasganj', 'Kaushambi', 'Kushinagar', 'Lakhimpur Kheri', 'Lalitpur', 'Lucknow', 'Maharajganj', 'Mahoba', 'Mainpuri', 'Mathura', 'Mau', 'Meerut', 'Mirzapur', 'Moradabad', 'Muzaffarnagar', 'Pilibhit', 'Pratapgarh', 'Prayagraj', 'Raebareli', 'Rampur', 'Saharanpur', 'Sambhal', 'Sant Kabir Nagar', 'Shahjahanpur', 'Shamli', 'Shravasti', 'Siddharthnagar', 'Sitapur', 'Sonbhadra', 'Sultanpur', 'Unnao', 'Varanasi', 'Agatti Island', 'Lakshadweep', 'Kargil', 'Leh', 'Anantapur', 'Chittoor', 'East Godavari', 'Guntur', 'Krishna', 'Kurnool', 'Prakasam', 'Sri Potti Sriramulu Nellore', 'Srikakulam', 'Visakhapatnam', 'Vizianagaram', 'West Godavari', 'YSR District, Kadapa (Cuddapah)', 'Ambala', 'Bhiwani', 'Charkhi Dadri', 'Faridabad', 'Fatehabad', 'Gurgaon', 'Hisar', 'Jhajjar', 'Jind', 'Kaithal', 'Karnal', 'Kurukshetra', 'Mahendragarh', 'Nuh', 'Palwal', 'Panchkula', 'Panipat', 'Rewari', 'Rohtak', 'Sirsa', 'Sonipat', 'Yamunanagar', 'Ahmednagar', 'Akola', 'Amravati', 'Aurangabad ', 'Beed', 'Bhandara', 'Buldhana', 'Chandrapur', 'Dhule', 'Gadchiroli', 'Gondia', 'Hingoli', 'Jalgaon', 'Jalna', 'Kolhapur', 'Latur', 'Mumbai', 'Nagpur', 'Nanded', 'Nandurbar', 'Nashik', 'Osmanabad', 'Palghar', 'Parbhani', 'Pune', 'Raigad', 'Ratnagiri', 'Sangli', 'Satara', 'Sindhudurg', 'Solapur', 'Thane', 'Wardha', 'Washim', 'Yavatmal', 'Amritsar', 'Barnala', 'Bathinda', 'Faridkot', 'Fatehgarh Sahib', 'Fazilka', 'Ferozpur', 'Gurdaspur', 'Hoshiarpur', 'Jalandhar', 'Kapurthala', 'Ludhiana', 'Mansa', 'Moga', 'Pathankot', 'Patiala', 'Rup Nagar', 'Sangrur', 'SAS Nagar', 'SBS Nagar', 'Sri Muktsar Sahib', 'Tarn Taran', 'Aranthangi', 'Ariyalur', 'Attur', 'Chengalpet', 'Chennai', 'Cheyyar', 'Coimbatore', 'Cuddalore', 'Dharmapuri', 'Dindigul', 'Erode', 'Kallakurichi', 'Kanchipuram', 'Kanyakumari', 'Karur', 'Kovilpatti', 'Krishnagiri', 'Madurai', 'Nagapattinam', 'Namakkal', 'Nilgiris', 'Palani', 'Paramakudi', 'Perambalur', 'Poonamallee', 'Pudukkottai', 'Ramanathapuram', 'Ranipet', 'Salem', 'Sivaganga', 'Sivakasi', 'Tenkasi', 'Thanjavur', 'Theni', 'Thoothukudi (Tuticorin)', 'Tiruchirappalli', 'Tirunelveli', 'Tirupattur', 'Tiruppur', 'Tiruvallur', 'Tiruvannamalai', 'Tiruvarur', 'Vellore', 'Viluppuram', 'Virudhunagar', 'North Goa', 'South Goa', 'Karaikal', 'Mahe', 'Puducherry', 'Yanam', 'Anantnag', 'Bandipore', 'Baramulla', 'Budgam', 'Doda', 'Ganderbal', 'Jammu', 'Kathua', 'Kishtwar', 'Kulgam', 'Kupwara', 'Poonch', 'Pulwama', 'Rajouri', 'Ramban', 'Reasi', 'Samba', 'Shopian', 'Srinagar', 'Udhampur', 'Angul', 'Balangir', 'Balasore', 'Bargarh', 'Bhadrak', 'Boudh', 'Cuttack', 'Deogarh', 'Dhenkanal', 'Gajapati', 'Ganjam', 'Jagatsinghpur', 'Jajpur', 'Jharsuguda', 'Kalahandi', 'Kandhamal', 'Kendrapara', 'Kendujhar', 'Khurda', 'Koraput', 'Malkangiri', 'Mayurbhanj', 'Nabarangpur', 'Nayagarh', 'Nuapada', 'Puri', 'Rayagada', 'Sambalpur', 'Subarnapur', 'Sundargarh', 'Bagalkot', 'Bangalore Rural', 'Bangalore Urban', 'BBMP', 'Belgaum', 'Bellary', 'Bidar', 'Chamarajanagar', 'Chikamagalur', 'Chikkaballapur', 'Chitradurga', 'Dakshina Kannada', 'Davanagere', 'Dharwad', 'Gadag', 'Gulbarga', 'Hassan', 'Haveri', 'Kodagu', 'Kolar', 'Koppal', 'Mandya', 'Mysore', 'Raichur', 'Ramanagara', 'Shimoga', 'Tumkur', 'Udupi', 'Uttar Kannada', 'Vijayapura', 'Yadgir', 'Adilabad', 'Bhadradri Kothagudem', 'Hyderabad', 'Jagtial', 'Jangaon', 'Jayashankar Bhupalpally', 'Jogulamba Gadwal', 'Kamareddy', 'Karimnagar', 'Khammam', 'Kumuram Bheem', 'Mahabubabad', 'Mahabubnagar', 'Mancherial', 'Medak', 'Medchal', 'Mulugu', 'Nagarkurnool', 'Nalgonda', 'Narayanpet', 'Nirmal', 'Nizamabad', 'Peddapalli', 'Rajanna Sircilla', 'Rangareddy', 'Sangareddy', 'Siddipet', 'Suryapet', 'Vikarabad', 'Wanaparthy', 'Warangal(Rural)', 'Warangal(Urban)', 'Yadadri Bhuvanagiri', 'Dhalai', 'Gomati', 'Khowai', 'North Tripura', 'Sepahijala', 'South Tripura', 'Unakoti', 'West Tripura', 'Dimapur', 'Kiphire', 'Kohima', 'Longleng', 'Mokokchung', 'Mon', 'Peren', 'Phek', 'Tuensang', 'Wokha', 'Zunheboto'];
-    $( "#dis" ).autocomplete({
+    $("#dis").autocomplete({
       source: availableTags
     });
-  } );
-  </script>
+  });
+</script>
 {% endblock content %}

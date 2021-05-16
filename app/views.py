@@ -17,13 +17,12 @@ def home(request):
 def handleSignUp(request):
     if request.method=="POST":
         # Get the post parameters
-        username=request.POST['username']
+        username = request.POST.get('username')
+        print(username)
         email=request.POST['email']
-        fname=request.POST['fname']
-        lname=request.POST['lname']
-        pass1=request.post['pass1']
-        pass2=request.post['pass2']
-
+        pass1=request.POST['pass1']
+        pass2=request.POST['pass2']
+        print(username)
         # check for errorneous input
         if pass1!=pass2:
             messages.error(request, "Password didnt match")
@@ -45,9 +44,6 @@ def handleSignUp(request):
             except User.DoesNotExist:
                 myuser = User.objects.create_user(username, email, pass1)
                 
-
-        myuser.first_name= fname
-        myuser.last_name= lname
         myuser.save()
         return redirect('/')
 

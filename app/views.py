@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth  import authenticate,  login, logout
 from django.contrib.messages import constants as messages
 from django.contrib import messages
+from .models import Query
 import requests
 import json
 from datetime import date
@@ -75,13 +76,16 @@ def handelLogout(request):
     return redirect("home")       
 def query(request):
     if request.method=="POST":
+        username = request.user.username
         email=request.POST['email']
         dis=request.POST['dis']
         vac=request.POST['vac']
         age=request.POST['age']
+        phone=request.POST['phone']
         today = date.today()
         d1 = today.strftime("%d-%m-%Y")
-        
+        query= Query(name=username,email=email,phone=phone,dis=dis,age=age,vac=vac)
+        query.save()
         headers = {'accept': 'application/json','Accept-Language' : 'hi_IN','User-Agent': 'Mozilla/4.0'}
         url='https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id='+str(dis)+'&date='+str(d1)
         response=requests.get(url, headers=headers, verify=False)
@@ -104,11 +108,70 @@ def query(request):
     s=s.join(arr)
     if c>0:
         send_mail(
-                        'Avilable vaccine',
-                        str(c)+' results found in your district \n'+s,
+                        'Available vaccine',
+                        str(c)+' results found in your district for '+str(age) +'+ \n'+s,
                         settings.EMAIL_HOST_USER,
                         [email],
                         fail_silently=False,
                         )                       
         
     return redirect("home")    
+
+# c=1
+# import threading
+
+# def fun1():
+#     global c
+    
+#     if c==0:
+#         return redirect("home") 
+        
+# def fun2(d1,age,vac,dis,email):
+#     global c
+#     threading.Timer(5.0,fun2).start()
+#     c+=1
+#     headers = {'accept': 'application/json','Accept-Language' : 'hi_IN','User-Agent': 'Mozilla/4.0'}
+#     url='https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id='+str(dis)+'&date='+str(d1)
+#     response=requests.get(url, headers=headers, verify=False)
+#     data=response.json()
+#     c=0
+#     arr=[]
+#     if (response.status_code == 200) :
+#         print(response)
+#         js = json.loads(response.content.decode())
+#         for i in js['centers']:
+#             for j in i['sessions']:
+#                     if int(j['min_age_limit']) == int(age) and int(j['available_capacity']) > 0 and j['vaccine'] == vac:
+#                         message = 'Date -'+j['date'] + ' Centre name - '+ i['name'] +"  Available_capacity "+str(j['available_capacity'])
+#                         arr.append(message)
+#                         c+=1
+                        
+
+#                         arr+=['\n']
+#     s=''
+#     s=s.join(arr)
+#     if c>0:
+#         send_mail(
+#                         'Avilable vaccine',
+#                         str(c)+' results found in your district \n'+s,
+#                         settings.EMAIL_HOST_USER,
+#                         [email],
+#                         fail_silently=False,
+#                         ) 
+
+
+
+# def query(request):
+#     global c
+#     if request.method=="POST":
+#         email=request.POST['email']
+#         dis=request.POST['dis']
+#         vac=request.POST['vac']
+#         age=request.POST['age']
+#         today = date.today()
+#         d1 = today.strftime("%d-%m-%Y")
+#     threading.Timer(7.0,fun1).start()
+#     threading.Timer(5.0,fun2(d1,age,vac,dis,email)).start()
+  
+  
+

@@ -1,24 +1,26 @@
-import  os
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "covid.settings")
+
 import django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'covid.settings')
 django.setup()
-from django.conf import settings
-from app.models import Query_set
+
+from django.core.management import call_command
+from models import Query_set
+import requests
 import json
 from datetime import date
 import time
 import smtplib, ssl
-import requests
 from django.core.mail import send_mail
+from django.conf import settings
+
 def script():
     s=Query_set.objects.all()
-
     for i in s:
         email=i.email
         dis=i.dis
         vac=i.vac
         age=i.age
-        name=i.name
         dis=str(dis)
         today = date.today()
         d1 = today.strftime("%d-%m-%Y")
@@ -39,12 +41,12 @@ def script():
                         c+=1
 
                         arr+=['\n']
-        s=''
-        s=s.join(arr)
-        if c>0:
-            send_mail(
+    s=''
+    s=s.join(arr)
+    if c>0:
+        send_mail(
                         'Available vaccine',
-                        "Hi "+str(name)+"\n"+str(c)+' results found in your district for '+str(age)+'+ \n'+s,
+                        str(c)+' results found in your district for '+str(age) +'+ \n'+s,
                         settings.EMAIL_HOST_USER,
                         [email],
                         fail_silently=False,
@@ -54,4 +56,4 @@ def script():
 
     return
 
-s=script()
+script()

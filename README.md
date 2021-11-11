@@ -1,6 +1,6 @@
 # Vaccine-Slot-Tracker
 ## ABOUT THE PROJECT
-* This project aims to alert the users about the availability of Vaccine accessibility in their area
+* This project aims to alert the users about the availability of Vaccine in their area
 
 * Users can enter their demographic information along with contact details on the website interface and will be notified once any vaccine is available on the government website for their area.
 
